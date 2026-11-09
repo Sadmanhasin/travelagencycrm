@@ -52,6 +52,36 @@
           </div>`).join('')}
       </div>
 
+      <div class="grid g-3 mb">
+        <div class="card">
+          ${cardHead("Today's Follow-ups", `${fuToday.filter((f) => f.status === 'done').length} of ${fuToday.length} completed`, '<a class="link" href="#/followups">All<i data-lucide="arrow-right"></i></a>')}
+          <div class="list" style="margin-top:8px" id="dashFU">
+            ${fuToday.map((f) => `<div class="list-item ${f.status === 'done' ? 'done' : ''}">
+              <input type="checkbox" class="cb" data-fu="${f.id}" ${f.status === 'done' ? 'checked' : ''} aria-label="Mark done">
+              ${typeIc(f.type)}
+              <a class="grow" href="${linkFor(f.ref)}"><div class="name strong sm ellipsis">${esc(f.name)}</div><div class="xs muted ellipsis">${esc(f.note)}</div></a>
+              <span class="xs muted num">${fmtTime(f.due)}</span>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div class="card">
+          ${cardHead('Recent Activity', 'Across your team', '<a class="link" href="#/activity">Logs<i data-lucide="arrow-right"></i></a>')}
+          <div class="card-body"><div class="timeline">
+            ${C.activities.slice(0, 6).map((a) => `<div class="tl-item">${typeIc(a.type, a.icon)}
+              <div class="tl-body"><div class="tl-title sm"><b>${esc(U.agent(a.who).name)}</b> ${a.action} <b>${esc(a.target)}</b> ${a.extra ? `<span class="muted">· ${esc(a.extra)}</span>` : ''}</div><div class="tl-time">${ago(a.t)}</div></div></div>`).join('')}
+          </div></div>
+        </div>
+        <div class="card">
+          ${cardHead('Upcoming Customer Travel', 'Next 14 days', '<a class="link" href="#/bookings">Bookings<i data-lucide="arrow-right"></i></a>')}
+          <div class="list" style="margin-top:8px">
+            ${upcoming.map((b) => { const n = dayDiff(b.travel); return `<a class="list-item" href="#/customers/${b.ref}">
+              <div class="info-cell" style="padding:6px 8px;text-align:center;min-width:48px"><div class="xs muted">${fmtDate(b.travel, { month: 'short' })}</div><div class="strong num">${fmtDate(b.travel, { day: '2-digit' })}</div></div>
+              <div class="grow"><div class="strong sm ellipsis">${esc(b.customer)}</div><div class="xs muted">${b.from} → ${b.to} · ${esc(b.airline)} · ${b.pax} pax</div></div>
+              <span class="badge ${n <= 3 ? 'amber' : 'outline'}">${n === 0 ? 'Today' : `In ${n}d`}</span></a>`; }).join('')}
+          </div>
+        </div>
+      </div>
+
       <div class="grid g-4 mb">
         ${kpi({ label: 'Total Leads', value: '1,250', icon: 'users-round', delta: '12.4%', foot: 'vs last month', spark: [40, 44, 42, 50, 55, 53, 62] })}
         ${kpi({ label: 'New Inquiries', value: '86', icon: 'inbox', tint: 'var(--info)', tintSoft: 'var(--info-soft)', delta: '8.1%', foot: 'this week', spark: [8, 12, 10, 14, 11, 15, 16] })}
@@ -86,7 +116,7 @@
         </div>
       </div>
 
-      <div class="grid g-main-side mb">
+      <div class="grid g-main-side">
         <div class="card">
           ${cardHead('Sales Pipeline', `${pipeTotal} open & closed deals · ${tkShort(pipe.reduce((s, p) => s + p[2], 0))} total value`, '<a class="link" href="#/pipeline">Manage<i data-lucide="arrow-right"></i></a>')}
           <div class="card-body">
@@ -110,36 +140,6 @@
               <div class="grow"><div class="row between"><span class="strong sm ellipsis">${esc(a.name)}</span><span class="sm strong num">${tkShort(a.revenue)}</span></div>
               <div class="row" style="gap:8px;margin-top:4px"><div class="progress grow"><span style="width:${Math.min(100, (a.achieved / a.target) * 100)}%"></span></div><span class="xs muted num">${Math.round((a.achieved / a.target) * 100)}%</span></div></div>
             </div>`).join('')}
-          </div>
-        </div>
-      </div>
-
-      <div class="grid g-3">
-        <div class="card">
-          ${cardHead("Today's Follow-ups", `${fuToday.filter((f) => f.status === 'done').length} of ${fuToday.length} completed`, '<a class="link" href="#/followups">All<i data-lucide="arrow-right"></i></a>')}
-          <div class="list" style="margin-top:8px" id="dashFU">
-            ${fuToday.map((f) => `<div class="list-item ${f.status === 'done' ? 'done' : ''}">
-              <input type="checkbox" class="cb" data-fu="${f.id}" ${f.status === 'done' ? 'checked' : ''} aria-label="Mark done">
-              ${typeIc(f.type)}
-              <a class="grow" href="${linkFor(f.ref)}"><div class="name strong sm ellipsis">${esc(f.name)}</div><div class="xs muted ellipsis">${esc(f.note)}</div></a>
-              <span class="xs muted num">${fmtTime(f.due)}</span>
-            </div>`).join('')}
-          </div>
-        </div>
-        <div class="card">
-          ${cardHead('Recent Activity', 'Across your team', '<a class="link" href="#/activity">Logs<i data-lucide="arrow-right"></i></a>')}
-          <div class="card-body"><div class="timeline">
-            ${C.activities.slice(0, 6).map((a) => `<div class="tl-item">${typeIc(a.type, a.icon)}
-              <div class="tl-body"><div class="tl-title sm"><b>${esc(U.agent(a.who).name)}</b> ${a.action} <b>${esc(a.target)}</b> ${a.extra ? `<span class="muted">· ${esc(a.extra)}</span>` : ''}</div><div class="tl-time">${ago(a.t)}</div></div></div>`).join('')}
-          </div></div>
-        </div>
-        <div class="card">
-          ${cardHead('Upcoming Customer Travel', 'Next 14 days', '<a class="link" href="#/bookings">Bookings<i data-lucide="arrow-right"></i></a>')}
-          <div class="list" style="margin-top:8px">
-            ${upcoming.map((b) => { const n = dayDiff(b.travel); return `<a class="list-item" href="#/customers/${b.ref}">
-              <div class="info-cell" style="padding:6px 8px;text-align:center;min-width:48px"><div class="xs muted">${fmtDate(b.travel, { month: 'short' })}</div><div class="strong num">${fmtDate(b.travel, { day: '2-digit' })}</div></div>
-              <div class="grow"><div class="strong sm ellipsis">${esc(b.customer)}</div><div class="xs muted">${b.from} → ${b.to} · ${esc(b.airline)} · ${b.pax} pax</div></div>
-              <span class="badge ${n <= 3 ? 'amber' : 'outline'}">${n === 0 ? 'Today' : `In ${n}d`}</span></a>`; }).join('')}
           </div>
         </div>
       </div>`;
