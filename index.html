@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aero CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script>
+    try { const t = localStorage.getItem('aero-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark"><i data-lucide="plane"></i></div>
+        <div>
+          <div class="brand-name">AERO CRM</div>
+          <div class="brand-sub">Travel Relationship Manager</div>
+        </div>
+      </div>
+
+      <nav class="nav" id="nav">
+        <div class="nav-group">CRM Workspace</div>
+        <a href="#/dashboard" data-route="dashboard"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+        <a href="#/leads" data-route="leads"><i data-lucide="inbox"></i>Leads &amp; Inquiries<span class="nav-count" id="navLeadCount">18</span></a>
+        <a href="#/customers" data-route="customers"><i data-lucide="users"></i>Customers</a>
+        <a href="#/pipeline" data-route="pipeline"><i data-lucide="kanban"></i>Sales Pipeline</a>
+        <a href="#/followups" data-route="followups"><i data-lucide="calendar-check"></i>Follow-ups &amp; Tasks<span class="nav-count danger" id="navOverdue">7</span></a>
+        <a href="#/bookings" data-route="bookings"><i data-lucide="ticket"></i>Bookings &amp; Tickets</a>
+        <a href="#/inbox" data-route="inbox"><i data-lucide="messages-square"></i>Communication Inbox<span class="nav-count" id="navUnread">5</span></a>
+
+        <div class="nav-group">Team &amp; Performance</div>
+        <a href="#/employees" data-route="employees"><i data-lucide="id-card"></i>Employee Management</a>
+        <a href="#/performance" data-route="performance"><i data-lucide="trending-up"></i>Sales Performance</a>
+        <a href="#/targets" data-route="targets"><i data-lucide="target"></i>Sales Targets</a>
+
+        <div class="nav-group">Administration</div>
+        <a href="#/notifications" data-route="notifications"><i data-lucide="bell"></i>Notifications</a>
+        <a href="#/roles" data-route="roles"><i data-lucide="shield-check"></i>Roles &amp; Permissions</a>
+        <a href="#/activity" data-route="activity"><i data-lucide="history"></i>Activity Logs</a>
+        <a href="#/settings" data-route="settings"><i data-lucide="settings"></i>CRM Settings</a>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="avatar sm" style="--h:220">AH</div>
+        <div class="grow">
+          <div class="strong">Arif Hasan</div>
+          <div class="muted xs">Administrator</div>
+        </div>
+        <button class="icon-btn" title="Sign out"><i data-lucide="log-out"></i></button>
+      </div>
+    </aside>
+    <div class="scrim" id="scrim"></div>
+
+    <!-- Main -->
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn only-mobile" id="menuBtn" aria-label="Open menu"><i data-lucide="menu"></i></button>
+        <button class="search-trigger" id="searchBtn">
+          <i data-lucide="search"></i>
+          <span>Search leads, customers, bookings…</span>
+          <kbd>Ctrl K</kbd>
+        </button>
+        <div class="topbar-actions">
+          <button class="btn primary" data-action="new-lead"><i data-lucide="plus"></i><span class="hide-sm">New Lead</span></button>
+          <button class="icon-btn" id="themeBtn" title="Toggle theme"><i data-lucide="moon"></i></button>
+          <div class="dropdown-wrap">
+            <button class="icon-btn" id="bellBtn" title="Notifications"><i data-lucide="bell"></i><span class="dot"></span></button>
+            <div class="dropdown" id="bellMenu"></div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content" id="view"></main>
+    </div>
+  </div>
+
+  <!-- Overlays -->
+  <div class="modal-root" id="modalRoot"></div>
+  <div class="toast-root" id="toastRoot"></div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/pages.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
