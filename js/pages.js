@@ -8,7 +8,7 @@
 
   const head = (title, sub, actions = '', crumbs = '') => `
     <div class="page-head">
-      <div>${crumbs}<h1>${title}</h1>${sub ? `<p>${sub}</p>` : ''}</div>
+      <div>${crumbs}<h1>${title}</h1></div>
       <div class="row wrap">${actions}</div>
     </div>`;
   const cardHead = (title, sub = '', right = '') => `<div class="card-head"><div><h3>${title}</h3>${sub ? `<div class="sub">${sub}</div>` : ''}</div>${right}</div>`;
